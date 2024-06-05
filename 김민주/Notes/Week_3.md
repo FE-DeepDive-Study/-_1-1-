@@ -70,3 +70,40 @@ const enum Class
 }
 ```
 문자형 enum 방식이 가장 많이 활용됨
+#
+#
+### 9장 - 클래스
+```typescript
+class Person
+{
+// 속성 이름과 타입 정의 필요(typescript)
+name : string;
+skill : string;
+
+//생성자 함수를 문법 레벨로 끌어올린 것
+ constructor(name : string, skill : string)
+ {
+  this.name = name
+  this.skill = skill
+ }
+}
+
+// 상속 가능
+class Developer extends Person
+{
+ constructor(name, skill)
+ {
+  super(name, skill);
+ }
+}
+
+// new 로 생성
+let minjoo = new Person('minjoo','fighting'); //< 클래스 인스턴스 (class instance)
+let minjoo2 = new Developer('minjoo','coding');
+```
+##### 클래스 접근 제어자
+- public : 어디서든
+- private : 클래스 내부에서만 엑세스 가능
+- protected : 상속받은 클래스에서까지 엑세스 가능
+
+##### 근데 빨간줄만 띄워주고 실행을 막아주진 못함;
