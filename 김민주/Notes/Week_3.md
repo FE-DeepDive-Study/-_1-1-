@@ -107,3 +107,62 @@ let minjoo2 = new Developer('minjoo','coding');
 - protected : 상속받은 클래스에서까지 엑세스 가능
 
 ##### 근데 빨간줄만 띄워주고 실행을 막아주진 못함;
+
+#
+#
+### 10장 - 제네릭
+- 타입을 미리 정하지 않고 런타임중에 타입을 정의해서 사용하는 문법
+- 반복되는 타입코드를 줄일 수 있다 (any 사용하면 타입스크립트 사용의 이점이 없음)
+```typescript
+function Log<T>(text : T) : T
+{
+ return T;
+}
+
+Log<string>('hi'); //< 이런식으로 사용 T의 모든 부분에 string이 들어간다 보면 됨
+```
+인터페이스에도 사용 가능
+```typescript
+interface DropDown<T>
+{
+ value : T;
+ selected : boolean;
+}
+```
+##### 제네릭의 타입 제약
+###### extends
+특정 타임만 사용 가능하게 하려면
+```typescript
+//이러면 string만 가능
+function Log<T extends string>(text : T) : T
+{
+ return text;
+}
+
+// length 속성을 갖는 타입만 가능
+function LengthOnly<T extends {length : number}>(value : T)
+{
+ return value.length;
+}
+```
+###### keyof
+특정 타입의 키값을 추출해 문자열 유니언 타입으로 변환
+```typescript
+type DeveloperKeys = keyof{name : string; skill : string;} // == type DeveloperKeys = "name" | "skill";
+
+// 이걸 제네릭에 적용 가능
+function PrintKeys<T extents keyof {name : string; skill : string;}>( value : T )
+{
+ return value;
+}
+```
+#
+#
+### ECT - 템플릿과 제네릭
+- 제네릭은 템플릿이 제공하는 기능 중 일부만 제공
+- 제네릭 : 런타임 중 타입 지정
+https://learn.microsoft.com/ko-kr/dotnet/csharp/programming-guide/generics/differences-between-cpp-templates-and-csharp-generics
+#
+### ECT - C#과 Java의 제네릭 차이
+- C# : 컴파일 에러로 검출 가능, 불필요한 캐스팅을 하지 않아 성능 개선
+- JAVA : 컴파일 에러로 검출은 가능하지만 실제 동작하는 코드는 제네릭을 사용하지 않아 성능 개선은 없음
