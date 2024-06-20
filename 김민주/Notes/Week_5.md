@@ -97,3 +97,70 @@ function greet(someone : Person | Developer)
   }
 }
 ```
+#
+#
+### 15장 - 타입 호환
+- 서로 다른 타입이 2개 있을 때 특정 타입에 다른 타입이 포함되는지
+```typescript 
+interface Ironman
+{
+  name : string;
+}
+
+class Avengers
+{
+  name : string;
+}
+
+let i : Ironman;
+i  = new Avengers();
+// 타입스크립트에서는 이게된다;
+```
+- => 구조적 타이핑 특성 때문에
+##### 구조적 타이핑
+- 타입 유형보다는 타입 구조로 호환 여부를 판별하는 언어적 특성
+- 타입 스크립트는 해당 타입이 어떤 타입 구조를 갖고있는지로 타입 호환 여부를 판단
+###### 이넘 타입은 같은 속성과 값을 가져도 이넘 타입간에는 서로 호환되지 않는다
+#
+#
+### 16장 - 타입 모듈
+- 모듈 : 프로그래밍 관점에서 특정 기능을 갖는 작은 단위의 코드
+- js 모듈 : 초창기에는 모듈 지원X => Common.js Require.js 대표적인 모듈
+##### import / export
+```typescript
+//math.js
+function sum(a,b)
+{
+  return a + b;
+}
+// 이렇게 하면 다른 파일에서 불러와서 사용 가능
+export(sum);
+// default 붙이면 이 파일에서 이거 하나만 내보내겠다는 뜻
+export default sum;
+
+//==========================================
+import { sum } from './math.js';
+
+// default 면 아래와 같이 임포트
+import sum from './math.js';
+
+// as로 함수 이름 변경하여 사용 가능
+import { sum as add } from './math.js';
+
+// *로 모두 가져오기 가능
+import * as myMath from './math.js';  //< myMath는 namespace같이 사용
+
+console.log(sum(10,20));
+```
+- import와 import type은 그냥 코딩컨벤션 따라서 결정
+##### Barrel
+- 여러개의 파일에서 가져온 모듈을 하나의 통처럼 관리
+```typescript
+// ./hero/index.ts
+import { Banner } from './hulk'；
+import { Tony } from './ironman'；
+import { Steve } from './captain'；
+
+// 이런식으로
+export { Banner, Tony, Steve }；
+```
